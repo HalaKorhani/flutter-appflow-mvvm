@@ -12,4 +12,23 @@ class TodoViewModel extends ChangeNotifier {
   List<Todo> todos = [];
   bool isLoading = false;
   String? errorMessage;
+
+  Future<void> loadTodos() async {
+    // Show loading indicator in the UI.
+    isLoading = true;
+    errorMessage = null;
+    notifyListeners();
+
+    try {
+      // Ask repository to fetch todos from the API.
+      todos = await _repository.fetchTodos();
+    } catch (e) {
+      // Save error message so the UI can display it.
+      errorMessage = e.toString();
+    }
+
+    // Hide loading indicator after request finishes.
+    isLoading = false;
+    notifyListeners();
+  }
 }

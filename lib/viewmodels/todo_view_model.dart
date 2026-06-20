@@ -31,4 +31,16 @@ class TodoViewModel extends ChangeNotifier {
     isLoading = false;
     notifyListeners();
   }
+
+  Future<void> refreshTodos() async {
+    try {
+      // Reload todos when user pulls the list down.
+      todos = await _repository.fetchTodos();
+      errorMessage = null;
+    } catch (e) {
+      errorMessage = e.toString();
+    }
+
+    notifyListeners();
+  }
 }

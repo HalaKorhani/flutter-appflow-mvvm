@@ -20,8 +20,16 @@ class NetworkMonitorTaskHandler extends TaskHandler {
     // Convert connection result into readable text.
     final status = NetworkStatusMapper.fromResults(results);
 
-    // Save the latest status.
-    _lastStatus = status;
+    // Only notify/update when the network status changes.
+    if (status != _lastStatus) {
+      _lastStatus = status;
+
+      // Update the persistent foreground notification text.
+      FlutterForegroundTask.updateService(
+        notificationTitle: 'Network Monitor Running',
+        notificationText: status,
+      );
+    }
   }
 
   @override

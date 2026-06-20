@@ -24,4 +24,36 @@ class GalleryViewModel extends ChangeNotifier {
       notifyListeners();
     }
   }
+
+  Future<void> pickImage() async {
+    // Reset old messages before choosing a new image.
+    permissionDenied = false;
+    message = null;
+    notifyListeners();
+
+    // Ask repository to request gallery/media permission.
+    final allowed = await _repository.requestGalleryPermission();
+
+    if (!allowed) {
+      permissionDenied = true;
+      message =
+          'Permission denied. Please allow media permission to select an image.';
+      notifyListeners();
+      return;
+    }
+
+    // Open the gallery picker.
+    final image = await _repository.pickImage();
+
+    if (image == null) {
+      message = 'No image selected.';
+      notifyListeners();
+      return;
+    }
+
+    // Save selected image in ViewModel state and local storage.
+    selectedImage = image;
+    await _repository.saveImagePath(image.path);
+    notifyListeners();
+  }
 }

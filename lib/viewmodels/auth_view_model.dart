@@ -65,4 +65,19 @@ class AuthViewModel extends ChangeNotifier {
     notifyListeners();
     return true;
   }
+
+  void clearError() {
+    // Used if we want to remove the login error from the UI.
+    errorMessage = null;
+    notifyListeners();
+  }
+
+  Future<void> logoutStateOnly() async {
+    // Reset ViewModel state after saved values are cleared by AppResetRepository.
+    isLoggedIn = false;
+    rememberMe = false;
+    firstLoginDate = null;
+    errorMessage = null;
+    notifyListeners();
+  }
 }

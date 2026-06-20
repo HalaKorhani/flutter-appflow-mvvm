@@ -17,4 +17,14 @@ class TimerViewModel extends ChangeNotifier {
 
   int get totalSeconds => _totalSeconds;
   String get formattedTime => DateTimeUtils.formatDuration(_totalSeconds);
+
+  Future<void> initializeAndStart() async {
+    // Load saved timer seconds only once.
+    // This prevents timer reset when navigating between screens.
+    if (!_initialized) {
+      _totalSeconds = await _repository.loadSeconds();
+      _initialized = true;
+      notifyListeners();
+    }
+  }
 }

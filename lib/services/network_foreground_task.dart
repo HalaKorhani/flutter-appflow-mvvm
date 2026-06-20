@@ -1,4 +1,7 @@
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter_foreground_task/flutter_foreground_task.dart';
+
+import '../utils/network_status_mapper.dart';
 
 // This callback must be top-level and marked as an entry point because Android
 // starts it in a separate Dart isolate for the foreground service.
@@ -8,19 +11,32 @@ void networkMonitorStartCallback() {
 }
 
 class NetworkMonitorTaskHandler extends TaskHandler {
+  String _lastStatus = 'Unknown';
+
+  Future<void> _checkNetworkAndNotify() async {
+    // Check current network connection.
+    final results = await Connectivity().checkConnectivity();
+
+    // Convert connection result into readable text.
+    final status = NetworkStatusMapper.fromResults(results);
+
+    // Save the latest status.
+    _lastStatus = status;
+  }
+
   @override
   Future<void> onStart(DateTime timestamp, TaskStarter starter) async {
-    // The service starts here.
+    await _checkNetworkAndNotify();
   }
 
   @override
   void onRepeatEvent(DateTime timestamp) {
-    // Repeated service work will be added later.
+    _checkNetworkAndNotify();
   }
 
   @override
   Future<void> onDestroy(DateTime timestamp, bool isTimeout) async {
-    // Cleanup code will be added if needed.
+    // Nothing to clean up here because we check connectivity periodically.
   }
 
   @override

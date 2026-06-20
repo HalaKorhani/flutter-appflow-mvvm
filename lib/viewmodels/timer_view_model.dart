@@ -26,5 +26,14 @@ class TimerViewModel extends ChangeNotifier {
       _initialized = true;
       notifyListeners();
     }
+
+    // Start one timer only. If it already exists, do not create another one.
+    _timer ??= Timer.periodic(const Duration(seconds: 1), (_) async {
+      _totalSeconds++;
+      notifyListeners();
+
+      // Save continuously so the timer survives app restart or sudden close.
+      await _repository.saveSeconds(_totalSeconds);
+    });
   }
 }

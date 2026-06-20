@@ -31,4 +31,38 @@ class AuthViewModel extends ChangeNotifier {
     isLoading = false;
     notifyListeners();
   }
+
+  Future<bool> login({
+    required String username,
+    required String password,
+    required bool remember,
+  }) async {
+    // Clear old error before checking login.
+    errorMessage = null;
+    notifyListeners();
+
+    // Ask repository to validate predefined username/password.
+    final valid = _repository.validateLogin(username, password);
+
+    if (!valid) {
+      errorMessage = 'Invalid username or password';
+      notifyListeners();
+      return false;
+    }
+
+    // Save or load the first login date.
+    firstLoginDate = await _repository.getOrCreateFirstLoginDate();
+
+    // Update login state.
+    rememberMe = remember;
+    isLoggedIn = true;
+
+    // Save Remember Me choice.
+    // If remember is false, user can enter now,
+    // but next app launch will show login again.
+    await _repository.setRememberMe(remember);
+
+    notifyListeners();
+    return true;
+  }
 }

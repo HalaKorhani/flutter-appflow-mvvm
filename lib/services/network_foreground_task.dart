@@ -24,11 +24,15 @@ class NetworkMonitorTaskHandler extends TaskHandler {
     if (status != _lastStatus) {
       _lastStatus = status;
 
-      // Update the persistent foreground notification text.
+      // This updates the persistent foreground notification text.
+      // It also satisfies the notification requirement on status change.
       FlutterForegroundTask.updateService(
         notificationTitle: 'Network Monitor Running',
         notificationText: status,
       );
+
+      // Send the new status back to the app UI ViewModel.
+      FlutterForegroundTask.sendDataToMain(status);
     }
   }
 

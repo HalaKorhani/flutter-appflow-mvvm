@@ -36,4 +36,29 @@ class TimerViewModel extends ChangeNotifier {
       await _repository.saveSeconds(_totalSeconds);
     });
   }
+
+  Future<void> stopAndSave() async {
+    // Stop timer before app exit and save latest value.
+    _timer?.cancel();
+    _timer = null;
+    await _repository.saveSeconds(_totalSeconds);
+  }
+
+  Future<void> reset() async {
+    // Reset timer during logout.
+    _timer?.cancel();
+    _timer = null;
+    _totalSeconds = 0;
+    _initialized = false;
+
+    await _repository.clearTimer();
+    notifyListeners();
+  }
+
+  @override
+  void dispose() {
+    // Prevent memory leaks when ViewModel is destroyed.
+    _timer?.cancel();
+    super.dispose();
+  }
 }

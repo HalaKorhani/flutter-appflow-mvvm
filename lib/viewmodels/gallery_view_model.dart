@@ -56,4 +56,16 @@ class GalleryViewModel extends ChangeNotifier {
     await _repository.saveImagePath(image.path);
     notifyListeners();
   }
+
+  Future<void> reset() async {
+    // Clear UI state.
+    selectedImage = null;
+    permissionDenied = false;
+    message = null;
+
+    // Clear saved image path from local storage.
+    await _repository.clearImage();
+
+    notifyListeners();
+  }
 }

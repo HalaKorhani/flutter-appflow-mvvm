@@ -34,11 +34,27 @@ class _TodoListScreenState extends State<TodoListScreen> {
       return const Center(child: CircularProgressIndicator());
     }
 
-    return Center(
-      child: Text(
-        'Todos count: ${viewModel.todos.length}',
-        style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-      ),
+    return ListView.builder(
+      padding: const EdgeInsets.all(12),
+      itemCount: viewModel.todos.length,
+      itemBuilder: (context, index) {
+        final todo = viewModel.todos[index];
+        final backgroundColor = todo.completed
+            ? Colors.green.shade100
+            : Colors.orange.shade100;
+
+        return Card(
+          color: backgroundColor,
+          child: ListTile(
+            leading: Icon(
+              todo.completed ? Icons.check_circle : Icons.pending,
+              color: todo.completed ? Colors.green : Colors.orange,
+            ),
+            title: Text(todo.title),
+            subtitle: Text(todo.completed ? 'Completed' : 'Incomplete'),
+          ),
+        );
+      },
     );
   }
 }

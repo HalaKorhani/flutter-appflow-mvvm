@@ -36,14 +36,20 @@ class TodoDetailsScreen extends StatelessWidget {
       ),
       body: Padding(
         padding: const EdgeInsets.all(20),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            _detailRow('ID:', todo.id.toString()),
-            _detailRow('User ID:', todo.userId.toString()),
-            _detailRow('Title:', todo.title),
-            _detailRow('Completed:', todo.completed.toString()),
-          ],
+        child: Card(
+          child: Padding(
+            padding: const EdgeInsets.all(20),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                _detailRow('ID:', todo.id.toString()),
+                _detailRow('User ID:', todo.userId.toString()),
+                _detailRow('Title:', todo.title),
+                _detailRow('Completed:', todo.completed.toString()),
+              ],
+            ),
+          ),
         ),
       ),
     );

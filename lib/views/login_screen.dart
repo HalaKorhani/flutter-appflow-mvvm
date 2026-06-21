@@ -11,6 +11,7 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
+  bool _rememberMe = false;
 
   @override
   void dispose() {
@@ -69,10 +70,26 @@ class _LoginScreenState extends State<LoginScreen> {
                           prefixIcon: Icon(Icons.password),
                         ),
                       ),
+                      const SizedBox(height: 8),
+                      CheckboxListTile(
+                        value: _rememberMe,
+                        contentPadding: EdgeInsets.zero,
+                        title: const Text('Remember Me'),
+                        controlAffinity: ListTileControlAffinity.leading,
+                        onChanged: (value) {
+                          setState(() => _rememberMe = value ?? false);
+                        },
+                      ),
                       const SizedBox(height: 16),
                       FilledButton(
                         onPressed: () {},
                         child: const Text('Login'),
+                      ),
+                      const SizedBox(height: 12),
+                      const Text(
+                        'Demo users: student/student123 or admin/admin123',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(fontSize: 12, color: Colors.grey),
                       ),
                     ],
                   ),

@@ -13,8 +13,26 @@ class TodoListScreen extends StatefulWidget {
 
 class _TodoListScreenState extends State<TodoListScreen> {
   @override
+  void initState() {
+    super.initState();
+
+    // Load API data after the widget appears.
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      final viewModel = context.read<TodoViewModel>();
+
+      if (viewModel.todos.isEmpty) {
+        viewModel.loadTodos();
+      }
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
     final viewModel = context.watch<TodoViewModel>();
+
+    if (viewModel.isLoading && viewModel.todos.isEmpty) {
+      return const Center(child: CircularProgressIndicator());
+    }
 
     return Center(
       child: Text(

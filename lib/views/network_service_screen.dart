@@ -3,7 +3,6 @@ import 'package:provider/provider.dart';
 
 import '../viewmodels/network_service_view_model.dart';
 
-// Screen responsible for showing network monitoring feature.
 class NetworkServiceScreen extends StatelessWidget {
   const NetworkServiceScreen({super.key});
 

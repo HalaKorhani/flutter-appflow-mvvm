@@ -11,8 +11,22 @@ class TodoDetailsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Todo Details')),
-      body: const Center(child: Text('Todo Details Screen')),
+      appBar: AppBar(
+        title: const Text('Todo Details'),
+        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(20),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text('ID: ${todo.id}'),
+            Text('User ID: ${todo.userId}'),
+            Text('Title: ${todo.title}'),
+            Text('Completed: ${todo.completed}'),
+          ],
+        ),
+      ),
     );
   }
 }

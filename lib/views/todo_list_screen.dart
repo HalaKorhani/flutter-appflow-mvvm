@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import '../viewmodels/todo_view_model.dart';
 
 // Screen responsible for displaying todos fetched from the API.
 class TodoListScreen extends StatefulWidget {
@@ -11,10 +14,12 @@ class TodoListScreen extends StatefulWidget {
 class _TodoListScreenState extends State<TodoListScreen> {
   @override
   Widget build(BuildContext context) {
-    return const Center(
+    final viewModel = context.watch<TodoViewModel>();
+
+    return Center(
       child: Text(
-        'Todo List Screen',
-        style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+        'Todos count: ${viewModel.todos.length}',
+        style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
       ),
     );
   }

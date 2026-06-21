@@ -21,6 +21,24 @@ class GalleryScreen extends StatelessWidget {
             icon: const Icon(Icons.photo_library),
             label: const Text('Pick Image from Gallery'),
           ),
+          const SizedBox(height: 16),
+
+          // Show error card when gallery permission is denied.
+          if (viewModel.permissionDenied)
+            Card(
+              color: Colors.red.shade100,
+              child: Padding(
+                padding: const EdgeInsets.all(12),
+                child: Text(
+                  viewModel.message ?? 'Permission denied.',
+                  textAlign: TextAlign.center,
+                  style: const TextStyle(
+                    color: Colors.red,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+            ),
         ],
       ),
     );

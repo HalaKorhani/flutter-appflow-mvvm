@@ -15,11 +15,12 @@ class TimerScreen extends StatelessWidget {
     final authViewModel = context.watch<AuthViewModel>();
     final firstLoginDate = authViewModel.firstLoginDate;
 
-    return Column(
+    return Stack(
       children: [
         if (firstLoginDate != null)
-          Padding(
-            padding: const EdgeInsets.all(14),
+          Positioned(
+            top: 14,
+            right: 14,
             child: Card(
               child: Padding(
                 padding: const EdgeInsets.symmetric(
@@ -27,31 +28,29 @@ class TimerScreen extends StatelessWidget {
                   vertical: 8,
                 ),
                 child: Text(
-                  'First login: ${DateTimeUtils.formatFirstLogin(firstLoginDate)}',
-                  textAlign: TextAlign.center,
+                  'First login:\n${DateTimeUtils.formatFirstLogin(firstLoginDate)}',
+                  textAlign: TextAlign.right,
                   style: const TextStyle(fontSize: 12),
                 ),
               ),
             ),
           ),
-        Expanded(
-          child: Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const Icon(Icons.timer, size: 80, color: Colors.deepPurple),
-                const SizedBox(height: 24),
-                Text(
-                  timerViewModel.formattedTime,
-                  style: const TextStyle(
-                    fontSize: 48,
-                    fontWeight: FontWeight.bold,
-                  ),
+        Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const Icon(Icons.timer, size: 80, color: Colors.deepPurple),
+              const SizedBox(height: 24),
+              Text(
+                timerViewModel.formattedTime,
+                style: const TextStyle(
+                  fontSize: 48,
+                  fontWeight: FontWeight.bold,
                 ),
-                const SizedBox(height: 8),
-                const Text('Total time spent in the app'),
-              ],
-            ),
+              ),
+              const SizedBox(height: 8),
+              const Text('Total time spent in the app'),
+            ],
           ),
         ),
       ],

@@ -8,6 +8,25 @@ class TodoDetailsScreen extends StatelessWidget {
 
   const TodoDetailsScreen({super.key, required this.todo});
 
+  Widget _detailRow(String label, String value) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 8),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          SizedBox(
+            width: 90,
+            child: Text(
+              label,
+              style: const TextStyle(fontWeight: FontWeight.bold),
+            ),
+          ),
+          Expanded(child: Text(value)),
+        ],
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -20,10 +39,10 @@ class TodoDetailsScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text('ID: ${todo.id}'),
-            Text('User ID: ${todo.userId}'),
-            Text('Title: ${todo.title}'),
-            Text('Completed: ${todo.completed}'),
+            _detailRow('ID:', todo.id.toString()),
+            _detailRow('User ID:', todo.userId.toString()),
+            _detailRow('Title:', todo.title),
+            _detailRow('Completed:', todo.completed.toString()),
           ],
         ),
       ),

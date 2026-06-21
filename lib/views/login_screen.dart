@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
-// Login screen for predefined users.
+import '../viewmodels/auth_view_model.dart';
+import 'main_page.dart';
+
+// Login screen for predefined users with Remember Me support.
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
 
@@ -13,6 +17,23 @@ class _LoginScreenState extends State<LoginScreen> {
   final TextEditingController _passwordController = TextEditingController();
   bool _rememberMe = false;
 
+  Future<void> _login() async {
+    final success = await context.read<AuthViewModel>().login(
+      username: _usernameController.text,
+      password: _passwordController.text,
+      remember: _rememberMe,
+    );
+
+    if (!mounted) return;
+
+    if (success) {
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (_) => const MainPage()),
+      );
+    }
+  }
+
   @override
   void dispose() {
     _usernameController.dispose();
@@ -22,6 +43,8 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final authViewModel = context.watch<AuthViewModel>();
+
     return Scaffold(
       body: SafeArea(
         child: Center(
@@ -80,9 +103,20 @@ class _LoginScreenState extends State<LoginScreen> {
                           setState(() => _rememberMe = value ?? false);
                         },
                       ),
+                      if (authViewModel.errorMessage != null) ...[
+                        const SizedBox(height: 8),
+                        Text(
+                          authViewModel.errorMessage!,
+                          textAlign: TextAlign.center,
+                          style: const TextStyle(
+                            color: Colors.red,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ],
                       const SizedBox(height: 16),
                       FilledButton(
-                        onPressed: () {},
+                        onPressed: _login,
                         child: const Text('Login'),
                       ),
                       const SizedBox(height: 12),

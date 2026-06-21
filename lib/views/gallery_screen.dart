@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import '../viewmodels/gallery_view_model.dart';
 
 // Screen responsible for displaying gallery image selection feature.
 class GalleryScreen extends StatelessWidget {
@@ -6,13 +9,19 @@ class GalleryScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Padding(
-      padding: EdgeInsets.all(20),
-      child: Center(
-        child: Text(
-          'Gallery Screen',
-          style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-        ),
+    final viewModel = context.watch<GalleryViewModel>();
+
+    return Padding(
+      padding: const EdgeInsets.all(20),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          FilledButton.icon(
+            onPressed: viewModel.pickImage,
+            icon: const Icon(Icons.photo_library),
+            label: const Text('Pick Image from Gallery'),
+          ),
+        ],
       ),
     );
   }

@@ -57,7 +57,13 @@ class GalleryScreen extends StatelessWidget {
                         Text('No image selected yet'),
                       ],
                     )
-                  : const SizedBox(),
+                  : ClipRRect(
+                      borderRadius: BorderRadius.circular(16),
+                      child: Image.file(
+                        viewModel.selectedImage!,
+                        fit: BoxFit.contain,
+                      ),
+                    ),
             ),
           ),
         ],

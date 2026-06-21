@@ -13,12 +13,38 @@ class NetworkServiceScreen extends StatelessWidget {
 
     return Padding(
       padding: const EdgeInsets.all(20),
-      child: Center(
-        child: Text(
-          viewModel.currentStatus,
-          textAlign: TextAlign.center,
-          style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
-        ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Card(
+            child: Padding(
+              padding: const EdgeInsets.all(20),
+              child: Column(
+                children: [
+                  const Icon(
+                    Icons.network_check,
+                    size: 70,
+                    color: Colors.deepPurple,
+                  ),
+                  const SizedBox(height: 14),
+                  const Text(
+                    'Current Network Status',
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                  ),
+                  const SizedBox(height: 8),
+                  Text(
+                    viewModel.currentStatus,
+                    textAlign: TextAlign.center,
+                    style: const TextStyle(
+                      fontSize: 22,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }

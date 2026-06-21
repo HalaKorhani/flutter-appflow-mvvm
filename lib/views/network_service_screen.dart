@@ -44,6 +44,19 @@ class NetworkServiceScreen extends StatelessWidget {
               ),
             ),
           ),
+          const SizedBox(height: 16),
+          Card(
+            child: ListTile(
+              leading: Icon(
+                viewModel.serviceRunning
+                    ? Icons.play_circle
+                    : Icons.stop_circle,
+                color: viewModel.serviceRunning ? Colors.green : Colors.red,
+              ),
+              title: const Text('Service Status'),
+              subtitle: Text(viewModel.serviceRunning ? 'Running' : 'Stopped'),
+            ),
+          ),
         ],
       ),
     );

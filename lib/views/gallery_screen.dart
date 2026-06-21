@@ -39,6 +39,27 @@ class GalleryScreen extends StatelessWidget {
                 ),
               ),
             ),
+
+          // Show normal message when permission is not denied.
+          if (!viewModel.permissionDenied && viewModel.message != null)
+            Text(viewModel.message!, textAlign: TextAlign.center),
+
+          const SizedBox(height: 16),
+
+          Expanded(
+            child: Center(
+              child: viewModel.selectedImage == null
+                  ? const Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Icon(Icons.image, size: 80, color: Colors.grey),
+                        SizedBox(height: 8),
+                        Text('No image selected yet'),
+                      ],
+                    )
+                  : const SizedBox(),
+            ),
+          ),
         ],
       ),
     );

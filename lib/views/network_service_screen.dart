@@ -57,6 +57,23 @@ class NetworkServiceScreen extends StatelessWidget {
               subtitle: Text(viewModel.serviceRunning ? 'Running' : 'Stopped'),
             ),
           ),
+          const SizedBox(height: 16),
+          FilledButton.icon(
+            onPressed: viewModel.serviceRunning ? null : viewModel.startService,
+            icon: const Icon(Icons.play_arrow),
+            label: const Text('Start Foreground Service'),
+          ),
+          const SizedBox(height: 10),
+          OutlinedButton.icon(
+            onPressed: viewModel.serviceRunning ? viewModel.stopService : null,
+            icon: const Icon(Icons.stop),
+            label: const Text('Stop Service'),
+          ),
+          const SizedBox(height: 16),
+          const Text(
+            'When active, the foreground notification stays visible and updates when Wi-Fi, mobile data, or offline status changes.',
+            textAlign: TextAlign.center,
+          ),
         ],
       ),
     );
